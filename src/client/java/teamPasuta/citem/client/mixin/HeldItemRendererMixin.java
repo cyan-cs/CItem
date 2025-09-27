@@ -30,22 +30,20 @@ public abstract class HeldItemRendererMixin {
             float remainingTicks = CitemClient.animationTicks - tickDelta;
             float progress = 1.0f - (remainingTicks / CitemClient.animationDuration);
 
-            // Select animation based on the random ID from CitemClient
             switch (CitemClient.activeAnimationId) {
-                case 0: // Original: Toss and Y-axis spin
                     float tossHeight = (float) Math.sin(progress * Math.PI) * 0.5f;
                     matrices.translate(0.0, tossHeight, 0.0);
                     float spinAngleY = progress * 360.0f;
                     matrices.multiply(RotationAxis.POSITIVE_Y.rotationDegrees(spinAngleY));
                     break;
 
-                case 1: // New: Forward flip (X-axis spin)
+                case 1:
                     float flipAngleX = progress * 360.0f;
                     matrices.translate(0.0, 0.2, -0.4); // Move it a bit to center for a better flip visual
                     matrices.multiply(RotationAxis.POSITIVE_X.rotationDegrees(flipAngleX));
                     break;
 
-                case 2: // New: Side roll (Z-axis spin)
+                case 2:
                     float rollAngleZ = progress * 360.0f;
                     matrices.translate(0.0, 0.3, -0.2); // Move it a bit to center
                     matrices.multiply(RotationAxis.POSITIVE_Z.rotationDegrees(rollAngleZ));
