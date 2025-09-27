@@ -20,7 +20,7 @@ public class CitemClient implements ClientModInitializer {
     private static KeyBinding specialActionKey;
 
     public static int animationTicks = 0;
-    public static final int animationDuration = 20; // Animation duration in ticks (1 second)
+    public static final int animationDuration = 20;
     public static int activeAnimationId = 0;
     private static final Random random = new Random();
 
@@ -34,19 +34,16 @@ public class CitemClient implements ClientModInitializer {
         ));
 
         ClientTickEvents.END_CLIENT_TICK.register(client -> {
-            // Handle key press to start animation
             while (specialActionKey.wasPressed()) {
-                if (client.player != null && animationTicks == 0) { // Only start if not already animating
+                if (client.player != null && animationTicks == 0) {
                     ItemStack mainHandStack = client.player.getMainHandStack();
                     if (!mainHandStack.isEmpty() && (mainHandStack.getItem() instanceof ToolItem || mainHandStack.getItem() instanceof BlockItem)) {
-                        // Choose a random animation
-                        activeAnimationId = random.nextInt(3); // Generates a random number between 0 and 2
+                        activeAnimationId = random.nextInt(3);
                         animationTicks = animationDuration;
                     }
                 }
             }
 
-            // Decrement animation timer
             if (animationTicks > 0) {
                 animationTicks--;
             }
